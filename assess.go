@@ -353,6 +353,7 @@ func RoomQuit(rid int64, id int64) (B bool) {
 					return true
 				} else {
 					RoomS = append(RoomS[:x], RoomS[x+1:]...)
+					SessionChange(id, 0)
 					return true
 				}
 			}
@@ -854,23 +855,13 @@ func RoomLeave(r *gin.Engine) {
 		id, _ := strconv.ParseInt(idS, 10, 64)
 		ridS := c.Query("rid")
 		rid, _ := strconv.ParseInt(ridS, 10, 64)
-		//验证该账号处于登陆状态且session状态为在房间内(无论是否准备以及是否为观战)
-		if SessionCheck(sid, id, 1) || SessionCheck(sid, id, 2) || SessionCheck(sid, id, 2975) {
-			if RoomQuit(rid, id) {
-				c.JSON(201, gin.H{
-					"code": 201,
-					"sid":  sid,
-					"id":   id,
-					"rid":  rid,
-				})
-			} else {
-				c.JSON(202, gin.H{
-					"code": 202,
-					"sid":  sid,
-					"id":   id,
-					"rid":  rid,
-				})
-			}
+		if RoomQuit(rid, id) {
+			c.JSON(201, gin.H{
+				"code": 201,
+				"sid":  sid,
+				"id":   id,
+				"rid":  rid,
+			})
 		} else {
 			c.JSON(202, gin.H{
 				"code": 202,
