@@ -150,6 +150,7 @@ func accountMenu(url1 string) {
 	fmt.Println("6:查看全部房间列表")
 	fmt.Println("7:进入房间")
 	fmt.Println("8:进入房间观战")
+	fmt.Println(User)
 	fmt.Scan(&num)
 	if num == 1 {
 		logout(url1)
@@ -384,7 +385,6 @@ func leave(url1 string) {
 	}else {
 		fmt.Println("退出房间失败")
 	}
-	User.Rid=0
 	accountMenu(url1)
 }
 func main() {
