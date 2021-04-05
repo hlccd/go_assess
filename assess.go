@@ -1147,6 +1147,9 @@ func GetMessageFromCustomer(conn net.Conn, db *sql.DB) {
 				}
 			}
 		}
+		if mess.Mes == "exit" {
+			break
+		}
 	}
 }
 
